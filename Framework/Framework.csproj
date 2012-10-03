@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{FD906C82-DE88-4B08-8E94-F3632BCCC64B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Framework</RootNamespace>
+    <AssemblyName>Framework</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>..\Build\Debug_x64\</OutputPath>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>..\Build\Release_x64\</OutputPath>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>..\Build\Debug_x86\</OutputPath>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>..\Build\Release_x86\</OutputPath>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Db4objects.Db4o">
+      <HintPath>..\Libs\db4o\Db4objects.Db4o.dll</HintPath>
+    </Reference>
+    <Reference Include="Db4objects.Db4o.CS, Version=8.1.270.16144, Culture=neutral, PublicKeyToken=6199cd4f203aa8eb, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\db4o\Db4objects.Db4o.CS.dll</HintPath>
+    </Reference>
+    <Reference Include="Db4objects.Db4o.Linq">
+      <HintPath>..\Libs\db4o\Db4objects.Db4o.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Configuration\Config.cs" />
+    <Compile Include="Configuration\RealmConfig.cs" />
+    <Compile Include="Configuration\WorldConfig.cs" />
+    <Compile Include="Console\Commands\CommandDefinitions.cs" />
+    <Compile Include="Console\Commands\CommandManager.cs" />
+    <Compile Include="Console\Commands\CommandParser.cs" />
+    <Compile Include="Console\Commands\AccountCommands.cs" />
+    <Compile Include="Console\Commands\RealmsCommands.cs" />
+    <Compile Include="Constants\AccountDataTypes.cs" />
+    <Compile Include="Constants\Authentication\AuthResults.cs" />
+    <Compile Include="Constants\Class.cs" />
+    <Compile Include="Constants\Expansion.cs" />
+    <Compile Include="Constants\Guids\HighGuidMask.cs" />
+    <Compile Include="Constants\Guids\HighGuidType.cs" />
+    <Compile Include="Constants\ObjectSettings\MovementSpeeds.cs" />
+    <Compile Include="Constants\Race.cs" />
+    <Compile Include="Constants\SplineMovement\MovementFlags.cs" />
+    <Compile Include="Constants\ObjectType.cs" />
+    <Compile Include="Constants\UpdateFields\UpdateFieldFlags.cs" />
+    <Compile Include="Constants\UpdateFields\UpdateFields.cs" />
+    <Compile Include="Constants\UpdateFlags.cs" />
+    <Compile Include="Constants\UpdateType.cs" />
+    <Compile Include="Database\DB.cs" />
+    <Compile Include="Database\ObjectDataBase.cs" />
+    <Compile Include="DBC\DB2Fmt.cs" />
+    <Compile Include="DBC\DB2Loader.cs" />
+    <Compile Include="DBC\DB2Reader.cs" />
+    <Compile Include="DBC\DB2Storage.cs" />
+    <Compile Include="DBC\DB2Structure.cs" />
+    <Compile Include="DBC\DBCExtensions.cs" />
+    <Compile Include="DBC\DBCFmt.cs" />
+    <Compile Include="DBC\DBCLoader.cs" />
+    <Compile Include="DBC\DBCReader.cs" />
+    <Compile Include="DBC\DBCStorage.cs" />
+    <Compile Include="DBC\DBCStructure.cs" />
+    <Compile Include="Logging\PacketDumper.cs" />
+    <Compile Include="Logging\PacketLogging\PacketLog.cs" />
+    <Compile Include="Network\Packets\BitPack.cs" />
+    <Compile Include="Network\Packets\BitUnpack.cs" />
+    <Compile Include="ObjectDefines\Account.cs" />
+    <Compile Include="Constants\Authentication\AuthCodes.cs" />
+    <Compile Include="Constants\Authentication\AuthLinks.cs" />
+    <Compile Include="Constants\NetMessages.cs" />
+    <Compile Include="Cryptography\PacketCrypt.cs" />
+    <Compile Include="Cryptography\SARC4.cs" />
+    <Compile Include="Cryptography\SRP6.cs" />
+    <Compile Include="Logging\Log.cs" />
+    <Compile Include="Logging\LogTypes.cs" />
+    <Compile Include="Network\Packets\PacketReader.cs" />
+    <Compile Include="Network\Packets\PacketWriter.cs" />
+    <Compile Include="ObjectDefines\CharacterCreationData.cs" />
+    <Compile Include="ObjectDefines\ObjectMovementValues.cs" />
+    <Compile Include="ObjectDefines\Realm.cs" />
+    <Compile Include="ObjectDefines\Spell.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Singleton\Singleton.cs" />
+    <Compile Include="Singleton\SingletonBase.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
