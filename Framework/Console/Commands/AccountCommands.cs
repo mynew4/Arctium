@@ -1,6 +1,6 @@
 ﻿using Framework.Database;
-using Framework.Logging;
 using Framework.ObjectDefines;
+using Framework.Logging;
 
 namespace Framework.Console.Commands
 {
@@ -17,19 +17,11 @@ namespace Framework.Console.Commands
             //byte[] hash = new SHA1CryptoServiceProvider().ComputeHash(Encoding.ASCII.GetBytes(password));
             //string hashString = BitConverter.ToString(hash).Replace("-", "");
 
-            Account acc = new Account();
-
-            acc.Name = name;
-            acc.Password = password;
-            acc.Language = "enUS";
-
-            var result = Account.GetAccountByName(name);
-            acc.Id = DB.RealmDB.RowCount + 1;
-
-            if (result == null)
+            SQLResult result = DB.Realms.Select("SELECT * FROM accounts WHERE name = '{0}'", name);
+            if (result.Count == 0)
             {
-                DB.RealmDB.Save(acc);
-                Log.Message(LogType.NORMAL, "Account {0} successfully created", name);
+                if (DB.Realms.Execute("INSERT INTO accounts (name, password, language) VALUES ('{0}', '{1}', '')", name, password.ToUpper()))
+                    Log.Message(LogType.NORMAL, "Account {0} successfully created", name);
             }
             else
                 Log.Message(LogType.ERROR, "Account {0} already in database", name);

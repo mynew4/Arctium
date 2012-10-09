@@ -1,12 +1,13 @@
-﻿﻿using Framework.Console;
+﻿﻿using System;
+using Framework.Configuration;
+using Framework.Console;
 using Framework.Console.Commands;
 using Framework.Database;
-using Framework.DBC;
 using Framework.Logging;
 using Framework.Network.Packets;
-using System;
-using WorldServer.Game.Managers;
 using WorldServer.Network;
+using Framework.DBC;
+using WorldServer.Game.Managers;
 
 namespace WorldServer
 {
@@ -25,8 +26,9 @@ namespace WorldServer
 
             Log.Message(LogType.NORMAL, "Starting Arctium WorldServer...");
 
-            DB.RealmDB.Connect("127.0.0.1", 8000, "arctium", "arctium");
-            //DB.WorldDB.Connect("127.0.0.1", 8001, "arctium", "arctium");
+            DB.Characters.Init(WorldConfig.CharDBHost, WorldConfig.CharDBUser, WorldConfig.CharDBPassword, WorldConfig.CharDBDataBase, WorldConfig.CharDBPort);
+            DB.Realms.Init(RealmConfig.RealmDBHost, RealmConfig.RealmDBUser, RealmConfig.RealmDBPassword, RealmConfig.RealmDBDataBase, RealmConfig.RealmDBPort);
+            DB.World.Init(WorldConfig.WorldDBHost, WorldConfig.WorldDBUser, WorldConfig.WorldDBPassword, WorldConfig.WorldDBDataBase, WorldConfig.WorldDBPort);
             Log.Message();
 
             DBCLoader.Init();
@@ -54,7 +56,7 @@ namespace WorldServer
             Log.Message(LogType.NORMAL, "Total Memory: {0} Kilobytes", GC.GetTotalMemory(false) / 1024);
 
             // Init Command handlers...
-            CommandDefinitions.InitializeWorldCommands();
+            CommandDefinitions.Initialize();
             CommandManager.InitCommands();
         }
     }

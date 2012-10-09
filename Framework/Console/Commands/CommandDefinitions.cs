@@ -2,14 +2,9 @@
 {
     public class CommandDefinitions
     {
-        public static void InitializeRealmCommands()
+        public static void Initialize()
         {
             CommandManager.DefineCommand("caccount", AccountCommands.CreateAccount);
-            CommandManager.DefineCommand("crealm", RealmsCommands.CreateRealm);
-        }
-
-        public static void InitializeWorldCommands()
-        {
         }
     }
 }

@@ -39,15 +39,8 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Db4objects.Db4o">
-      <HintPath>..\Libs\db4o\Db4objects.Db4o.dll</HintPath>
-    </Reference>
-    <Reference Include="Db4objects.Db4o.CS, Version=8.1.270.16144, Culture=neutral, PublicKeyToken=6199cd4f203aa8eb, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Libs\db4o\Db4objects.Db4o.CS.dll</HintPath>
-    </Reference>
-    <Reference Include="Db4objects.Db4o.Linq">
-      <HintPath>..\Libs\db4o\Db4objects.Db4o.Linq.dll</HintPath>
+    <Reference Include="mysql.data">
+      <HintPath>..\Libs\mysql.data.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -66,15 +59,11 @@
     <Compile Include="Console\Commands\CommandManager.cs" />
     <Compile Include="Console\Commands\CommandParser.cs" />
     <Compile Include="Console\Commands\AccountCommands.cs" />
-    <Compile Include="Console\Commands\RealmsCommands.cs" />
     <Compile Include="Constants\AccountDataTypes.cs" />
     <Compile Include="Constants\Authentication\AuthResults.cs" />
-    <Compile Include="Constants\Class.cs" />
-    <Compile Include="Constants\Expansion.cs" />
     <Compile Include="Constants\Guids\HighGuidMask.cs" />
     <Compile Include="Constants\Guids\HighGuidType.cs" />
     <Compile Include="Constants\ObjectSettings\MovementSpeeds.cs" />
-    <Compile Include="Constants\Race.cs" />
     <Compile Include="Constants\SplineMovement\MovementFlags.cs" />
     <Compile Include="Constants\ObjectType.cs" />
     <Compile Include="Constants\UpdateFields\UpdateFieldFlags.cs" />
@@ -82,7 +71,10 @@
     <Compile Include="Constants\UpdateFlags.cs" />
     <Compile Include="Constants\UpdateType.cs" />
     <Compile Include="Database\DB.cs" />
-    <Compile Include="Database\ObjectDataBase.cs" />
+    <Compile Include="Database\MySqlBase.cs" />
+    <Compile Include="Database\SQLResult.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="DBC\DB2Fmt.cs" />
     <Compile Include="DBC\DB2Loader.cs" />
     <Compile Include="DBC\DB2Reader.cs" />
@@ -109,10 +101,8 @@
     <Compile Include="Logging\LogTypes.cs" />
     <Compile Include="Network\Packets\PacketReader.cs" />
     <Compile Include="Network\Packets\PacketWriter.cs" />
-    <Compile Include="ObjectDefines\CharacterCreationData.cs" />
     <Compile Include="ObjectDefines\ObjectMovementValues.cs" />
     <Compile Include="ObjectDefines\Realm.cs" />
-    <Compile Include="ObjectDefines\Spell.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Singleton\Singleton.cs" />
     <Compile Include="Singleton\SingletonBase.cs" />

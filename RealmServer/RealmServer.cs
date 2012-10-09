@@ -1,10 +1,8 @@
-﻿using Framework.Console;
-using Framework.Console.Commands;
+﻿using System;
+using Framework.Configuration;
 using Framework.Database;
 using Framework.Logging;
 using Framework.Network.Realm;
-using Framework.ObjectDefines;
-using System;
 
 namespace RealmServer
 {
@@ -23,25 +21,25 @@ namespace RealmServer
 
             Log.Message(LogType.NORMAL, "Starting Arctium RealmServer...");
 
-            RealmClass.realm = new RealmNetwork();
+            DB.Realms.Init(RealmConfig.RealmDBHost, RealmConfig.RealmDBUser, RealmConfig.RealmDBPassword, RealmConfig.RealmDBDataBase, RealmConfig.RealmDBPort);
 
-            DB.RealmDB.Connect("127.0.0.1", 8000, "arctium", "arctium");
+            RealmClass.realm = new RealmNetwork();
 
             // Add realms from database.
             Log.Message(LogType.NORMAL, "Updating Realm List..."); 
             Log.Message();
-            var result = DB.RealmDB.Select<Realm>();
-            foreach (Realm r in result)
+            SQLResult result = DB.Realms.Select("SELECT * FROM realms");
+            for (int i = 0; i < result.Count; i++)
             {
                 RealmClass.Realms.Add(new Framework.ObjectDefines.Realm()
                 {
-                    Id = r.Id,
-                    Name = r.Name,
-                    IP = r.IP,
-                    Port = r.Port,
+                    Id = result.Read<uint>(i, "id"),
+                    Name = result.Read<string>(i, "name"),
+                    IP = result.Read<string>(i, "ip"),
+                    Port = result.Read<uint>(i, "port"),
                 });
 
-                Log.Message(LogType.NORMAL, "Added Realm \"{0}\"", r.Name);
+                Log.Message(LogType.NORMAL, "Added Realm \"{0}\"", RealmClass.Realms[i].Name);
             }
             Log.Message();
 
@@ -59,10 +57,6 @@ namespace RealmServer
             // Free memory...
             GC.Collect();
             Log.Message(LogType.NORMAL, "Total Memory: {0} Kilobytes", GC.GetTotalMemory(false) / 1024);
-            
-            // Init Command handlers...
-            CommandDefinitions.InitializeRealmCommands();
-            CommandManager.InitCommands();
         }
     }
 }

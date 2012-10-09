@@ -15,17 +15,16 @@ namespace Framework.Network.Realm
 {
     public class RealmClass
     {
-        public static Account Account { get; set; }
+        public static Account account { get; set; }
         public static List<ObjectDefines.Realm> Realms = new List<ObjectDefines.Realm>();
         public static RealmNetwork realm;
         public SRP6 SecureRemotePassword { get; set; }
         public Socket clientSocket;
         byte[] DataBuffer;
-        Account account;
 
         public RealmClass()
         {
-            Account = new Account();
+            account = new Account();
             SecureRemotePassword = new SRP6();
         }
 
@@ -60,29 +59,28 @@ namespace Framework.Network.Realm
             data.Skip(10);
             ushort ClientBuild = data.ReadUInt16();
             data.Skip(8);
-            Account.Language = data.ReadStringFromBytes(4);
+            account.Language = data.ReadStringFromBytes(4);
             data.Skip(4);
 
-            Account.IP = data.ReadIPAddress();
-            Account.Name = data.ReadAccountName();
+            account.IP = data.ReadIPAddress();
+            account.Name = data.ReadAccountName();
 
-            account = Account.GetAccountByName(Account.Name);
+            SQLResult result = DB.Realms.Select("SELECT id, name, password, expansion, gmlevel, securityFlags FROM accounts WHERE name = '{0}'", account.Name);
 
             PacketWriter logonChallenge = new PacketWriter();
             logonChallenge.WriteUInt8((byte)ClientLink.CMD_AUTH_LOGON_CHALLENGE);
             logonChallenge.WriteUInt8(0);
 
-            if (account != null)
+            if (result.Count != 0)
             {
-                Account.Id = account.Id;
-                Account.Expansion = account.Expansion;
-                Account.SecurityFlags = account.SecurityFlags;
+                account.Id = result.Read<Int32>(0, "id");
+                account.Expansion = result.Read<Byte>(0, "expansion");
+                account.SecurityFlags = result.Read<Byte>(0, "securityFlags");
 
-                account.IP = Account.IP;
-                account.Language = Account.Language;
+                DB.Realms.Execute("UPDATE accounts SET ip = '{0}', language = '{1}' WHERE id = {2}", account.IP, account.Language, account.Id);
 
-                byte[] username = Encoding.ASCII.GetBytes(account.Name.ToUpper());
-                byte[] password = Encoding.ASCII.GetBytes(account.Password.ToUpper());
+                byte[] username = Encoding.ASCII.GetBytes(result.Read<String>(0, "name").ToUpper());
+                byte[] password = Encoding.ASCII.GetBytes(result.Read<String>(0, "password").ToUpper());
 
                 // WoW 5.0.5.16057 (5.0.5a)
                 if (ClientBuild == 16057)
@@ -101,13 +99,11 @@ namespace Framework.Network.Realm
                     logonChallenge.WriteBytes(buf);
 
                     // Security flags
-                    logonChallenge.WriteUInt8(Account.SecurityFlags);
+                    logonChallenge.WriteUInt8(account.SecurityFlags);
 
                     // Enable authenticator
-                    if ((Account.SecurityFlags & 4) != 0)
+                    if ((account.SecurityFlags & 4) != 0)
                         logonChallenge.WriteUInt8(1);
-
-                    DB.RealmDB.Save(account);
                 }
             }
             else
@@ -139,9 +135,9 @@ namespace Framework.Network.Realm
 
             foreach (var b in session.SecureRemotePassword.K)
                 if (b < 0x10)
-                    Account.SessionKey += "0" + String.Format("{0:X}", b);
+                    account.SessionKey += "0" + String.Format("{0:X}", b);
                 else
-                    Account.SessionKey += String.Format("{0:X}", b);
+                    account.SessionKey += String.Format("{0:X}", b);
 
             logonProof.WriteUInt8((byte)ClientLink.CMD_AUTH_LOGON_PROOF);
             logonProof.WriteUInt8(0);
@@ -150,8 +146,7 @@ namespace Framework.Network.Realm
             logonProof.WriteUInt32(0);
             logonProof.WriteUInt16(0);
 
-            account.SessionKey = Account.SessionKey;
-            DB.RealmDB.Save(account);
+            DB.Realms.Execute("UPDATE accounts SET sessionkey = '{0}' WHERE id = {1}", account.SessionKey, account.Id);
 
             session.Send(logonProof);
         }

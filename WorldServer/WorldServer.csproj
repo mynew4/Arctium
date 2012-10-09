@@ -39,14 +39,6 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Db4objects.Db4o, Version=8.1.270.16144, Culture=neutral, PublicKeyToken=6199cd4f203aa8eb, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Libs\db4o\Db4objects.Db4o.dll</HintPath>
-    </Reference>
-    <Reference Include="Db4objects.Db4o.Linq, Version=8.1.270.16144, Culture=neutral, PublicKeyToken=6199cd4f203aa8eb, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Libs\db4o\Db4objects.Db4o.Linq.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -73,6 +65,7 @@
     <Compile Include="Game\Packets\PacketManager.cs" />
     <Compile Include="Game\WorldEntities\Character.cs" />
     <Compile Include="Game\WorldEntities\Creature.cs" />
+    <Compile Include="Game\WorldEntities\Spell.cs" />
     <Compile Include="Game\WorldEntities\WorldObject.cs" />
     <Compile Include="WorldServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
