@@ -63,37 +63,63 @@ namespace WorldServer.Game.PacketHandler
 
             Realm realm = Realm.GetRealmById(WorldConfig.RealmId);
 
+            bool HasAccountData = true;
+            bool IsInQueue = false;
+
             PacketWriter authResponse = new PacketWriter(JAMCMessage.AuthResponse);
             BitPack BitPack = new BitPack(authResponse);
 
             BitPack.Write(1);                                      // HasAccountData
-            BitPack.Write(0);                                      // Unknown, 5.0.4
-            BitPack.Write(realm.RealmClasses.Count, 25);           // Activation count for classes
-            BitPack.Write(0, 22);                                  // Activate character template windows/button
-            BitPack.Write(realm.RealmRaces.Count, 25);             // Activation count for races
-            BitPack.Write(0);                                      // IsInQueue
-            BitPack.Flush();
 
-            authResponse.WriteUInt8(0);
-            authResponse.WriteUInt8(session.Account.Expansion);
-
-            foreach (var kp in realm.RealmClasses)
+            if (HasAccountData)
             {
-                authResponse.WriteUInt8((byte)kp.Key);
-                authResponse.WriteUInt8((byte)kp.Value);
+                BitPack.Write(0);                                  // Unknown, 5.0.4
+                BitPack.Write(realm.RealmClasses.Count, 25);       // Activation count for classes
+                BitPack.Write(0, 22);                              // Activate character template windows/button
+                BitPack.Write(realm.RealmRaces.Count, 25);         // Activation count for races
+                BitPack.Write(IsInQueue);                          // IsInQueue
+
+                //if (HasCharacterTemplate)
+                //Write bits for char templates...
             }
 
-            authResponse.WriteUInt32(0);
-            authResponse.WriteUInt32(0);
-            authResponse.WriteUInt32(0);
-
-            foreach (var kp in realm.RealmRaces)
+            if (IsInQueue)
             {
-                authResponse.WriteUInt8((byte)kp.Key);
-                authResponse.WriteUInt8((byte)kp.Value);
+                BitPack.Write(0);                                  // Unknown
+                BitPack.Flush();
+
+                authResponse.WriteUInt32(0);                       // QueuePosition
+            }
+            else
+                BitPack.Flush();
+
+            if (HasAccountData)
+            {
+                authResponse.WriteUInt8(0);
+                authResponse.WriteUInt8(session.Account.Expansion);
+
+                foreach (var kp in realm.RealmClasses)
+                {
+                    authResponse.WriteUInt8((byte)kp.Key);
+                    authResponse.WriteUInt8((byte)kp.Value);
+                }
+
+                //if (HasCharacterTemplate)
+                //Write data for char templates...
+
+                authResponse.WriteUInt32(0);
+                authResponse.WriteUInt32(0);
+                authResponse.WriteUInt32(0);
+
+                foreach (var kp in realm.RealmRaces)
+                {
+                    authResponse.WriteUInt8((byte)kp.Key);
+                    authResponse.WriteUInt8((byte)kp.Value);
+                }
+
+                authResponse.WriteUInt8(session.Account.Expansion);
             }
 
-            authResponse.WriteUInt8(session.Account.Expansion);
             authResponse.WriteUInt8((byte)AuthCodes.AUTH_OK);
 
             session.Send(authResponse);
