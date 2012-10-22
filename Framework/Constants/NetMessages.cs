@@ -459,7 +459,7 @@ namespace Framework.Constants
         EnumCharacters                           = 0x576,
         RequestRandomCharacterName               = 2757,
         RequestCharCreate                        = 0x332,
-        RequestCharDelete                        = 214,
+        RequestCharDelete                        = 0x944,
         PlayerLogin                              = 0x203,
         #endregion
         #region Script

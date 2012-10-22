@@ -2,7 +2,8 @@
 {
     public class DB
     {
-        public static ObjectDataBase RealmDB = new ObjectDataBase();
-        public static ObjectDataBase WorldDB = new ObjectDataBase();
+        public static MySqlBase Characters = new MySqlBase();
+        public static MySqlBase Realms = new MySqlBase();
+        public static MySqlBase World = new MySqlBase();
     }
 }

@@ -11,6 +11,7 @@ namespace Framework.Singleton
 
         public static T GetInstance<T>() where T : class
         {
+
             lock (Sync)
             {
                 if (ObjectDictionary.ContainsKey(typeof(T).GUID))

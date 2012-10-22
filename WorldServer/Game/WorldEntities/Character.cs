@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Linq;
-using Db4objects.Db4o;
-using Db4objects.Db4o.Linq;
 using System.Collections.Generic;
 using Framework.Database;
 using Framework.Constants;
@@ -9,7 +6,6 @@ using Framework.DBC;
 using Framework.Network.Packets;
 using WorldServer.Game.Managers;
 using WorldServer.Network;
-using Framework.ObjectDefines;
 
 namespace WorldServer.Game.WorldEntities
 {
@@ -39,70 +35,42 @@ namespace WorldServer.Game.WorldEntities
         public UInt32 PetFamily;
         public UInt32 CharacterFlags;
         public UInt32 CustomizeFlags;
-        public List<Spell> Spells = new List<Spell>();
 
-        public Character() { }
+        public List<PlayerSpell> SpellList = new List<PlayerSpell>();
 
         public Character(UInt64 guid, ref WorldClass session) : base((int)PlayerFields.End)
         {
-            var result = GetCharacterByGuid(guid);
+            SQLResult result = DB.Characters.Select("SELECT * FROM characters WHERE guid = {0}", guid);
 
-            Guid           = result.Guid;
-            AccountId      = result.AccountId;
-            Name           = result.Name;
-            Race           = result.Race;
-            Class          = result.Class;
-            Gender         = result.Gender;
-            Skin           = result.Skin;
-            Face           = result.Face;
-            HairStyle      = result.HairStyle;
-            HairColor      = result.HairColor;
-            FacialHair     = result.FacialHair;
-            Level          = result.Level;
-            Zone           = result.Zone;
-            Map            = result.Map;
-            X              = result.X;
-            Y              = result.Y;
-            Z              = result.Z;
-            O              = result.O;
-            GuildGuid      = result.GuildGuid;
-            PetDisplayInfo = result.PetDisplayInfo;
-            PetLevel       = result.PetLevel;
-            PetFamily      = result.PetFamily;
-            CharacterFlags = result.CharacterFlags;
-            CustomizeFlags = result.CustomizeFlags;
+            Guid           = result.Read<UInt64>(0, "Guid");
+            AccountId      = result.Read<UInt32>(0, "AccountId");
+            Name           = result.Read<String>(0, "Name");
+            Race           = result.Read<Byte>(0, "Race");
+            Class          = result.Read<Byte>(0, "Class");
+            Gender         = result.Read<Byte>(0, "Gender");
+            Skin           = result.Read<Byte>(0, "Skin");
+            Face           = result.Read<Byte>(0, "Face");
+            HairStyle      = result.Read<Byte>(0, "HairStyle");
+            HairColor      = result.Read<Byte>(0, "HairColor");
+            FacialHair     = result.Read<Byte>(0, "FacialHair");
+            Level          = result.Read<Byte>(0, "Level");
+            Zone           = result.Read<UInt32>(0, "Zone");
+            Map            = result.Read<UInt32>(0, "Map");
+            X              = result.Read<Single>(0, "X");
+            Y              = result.Read<Single>(0, "Y");
+            Z              = result.Read<Single>(0, "Z");
+            O              = result.Read<Single>(0, "O");
+            GuildGuid      = result.Read<UInt64>(0, "GuildGuid");
+            PetDisplayInfo = result.Read<UInt32>(0, "PetDisplayId");
+            PetLevel       = result.Read<UInt32>(0, "PetLevel");
+            PetFamily      = result.Read<UInt32>(0, "PetFamily");
+            CharacterFlags = result.Read<UInt32>(0, "CharacterFlags");
+            CustomizeFlags = result.Read<UInt32>(0, "CustomizeFlags");
 
             // Set current session of the character
             Globals.SetSession(ref session);
 
             SetCharacterFields();
-        }
-
-        public static Character GetCharacterByGuid(UInt64 charGuid)
-        {
-            var character = from Character c in DB.RealmDB.Connection where c.Guid == charGuid select c;
-
-            if (character.Count() == 1)
-                return character.First();
-
-            return null;
-        }
-
-        public static Character GetCharacterByName(string name)
-        {
-            var character = from Character c in DB.RealmDB.Connection where c.Name == name select c;
-
-            if (character.Count() == 1)
-                return character.First();
-
-            return null;
-        }
-
-        public static Character[] GetCharactersByAccount(Account acc)
-        {
-            var character = from Character c in DB.RealmDB.Connection where c.AccountId == acc.Id select c;
-
-            return character.ToArray();
         }
 
         public void SetCharacterFields()
