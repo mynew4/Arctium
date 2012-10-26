@@ -7,8 +7,8 @@ namespace WorldServer.Game.Packets.PacketHandler
 {
     public class LogoutHandler : Globals
     {
-        [Opcode(ClientMessage.Logout)]
-        public static void HandleLogout(ref PacketReader packet, ref WorldClass session)
+        [Opcode(ClientMessage.Logout, "")]
+        public static void HandleLogoutComplete(ref PacketReader packet, ref WorldClass session)
         {
             PacketWriter logoutComplete = new PacketWriter(LegacyMessage.LogoutComplete);
 

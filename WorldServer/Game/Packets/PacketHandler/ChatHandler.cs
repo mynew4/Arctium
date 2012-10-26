@@ -12,8 +12,8 @@ namespace WorldServer.Game.Packets.PacketHandler
 {
     public class ChatHandler : Globals
     {
-        [Opcode(ClientMessage.ChatMessageSay)]
-        public static void HandleChatMessageSay(ref PacketReader packet, ref WorldClass session)
+        [Opcode(ClientMessage.ChatMessageSay, "")]
+        public static void HandleMessageChat(ref PacketReader packet, ref WorldClass session)
         {
             BitUnpack BitUnpack = new BitUnpack(packet);
 
@@ -24,7 +24,7 @@ namespace WorldServer.Game.Packets.PacketHandler
 
             PacketWriter messageChat = new PacketWriter(LegacyMessage.MessageChat);
 
-            ulong guid = WorldMgr.Session.Character.Guid;
+            ulong guid = session.Character.Guid;
 
             messageChat.WriteUInt8(1);
             messageChat.WriteInt32(language);

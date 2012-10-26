@@ -6,14 +6,18 @@ using WorldServer.Game.WorldEntities;
 using WorldServer.Network;
 using Framework.ObjectDefines;
 using Framework.Constants.ObjectSettings;
+using System.Collections.Generic;
 
 namespace WorldServer.Game.Managers
 {
     public sealed class WorldManager : SingletonBase<WorldManager>
     {
-        WorldManager() { }
+        public Dictionary<uint, WorldClass> Session;
 
-        public WorldClass Session { get; set; }
+        WorldManager()
+        {
+            Session = new Dictionary<uint, WorldClass>();
+        }
 
         public void WriteAccountData(AccountDataMasks mask, ref WorldClass session)
         {

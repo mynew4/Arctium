@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Game\Managers\Globals.cs" />
     <Compile Include="Game\Managers\ObjectManager.cs" />
+    <Compile Include="Game\Managers\SkillManager.cs" />
     <Compile Include="Game\Managers\SpellManager.cs" />
     <Compile Include="Game\Managers\WorldManager.cs" />
     <Compile Include="Game\ObjectStores\CharacterStore.cs" />
@@ -57,13 +58,16 @@
     <Compile Include="Game\Packets\PacketHandler\CharacterHandler.cs" />
     <Compile Include="Game\Packets\PacketHandler\ChatHandler.cs" />
     <Compile Include="Game\Packets\PacketHandler\LogoutHandler.cs" />
+    <Compile Include="Game\Packets\PacketHandler\MiscHandler.cs" />
     <Compile Include="Game\Packets\PacketHandler\MoveHandler.cs" />
     <Compile Include="Game\Packets\PacketHandler\SpellHandler.cs" />
     <Compile Include="Game\Packets\PacketHandler\TimeHandler.cs" />
+    <Compile Include="Game\Packets\PacketHandler\TutorialHandler.cs" />
     <Compile Include="Game\Packets\PacketHandler\UpdateHandler.cs" />
     <Compile Include="Game\Packets\PacketManager.cs" />
     <Compile Include="Game\WorldEntities\Character.cs" />
     <Compile Include="Game\WorldEntities\Creature.cs" />
+    <Compile Include="Game\WorldEntities\Skill.cs" />
     <Compile Include="Game\WorldEntities\Spell.cs" />
     <Compile Include="Game\WorldEntities\WorldObject.cs" />
     <Compile Include="WorldServer.cs" />

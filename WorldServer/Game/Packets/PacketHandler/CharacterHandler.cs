@@ -10,13 +10,14 @@ using Framework.Network.Packets;
 using WorldServer.Game.Managers;
 using WorldServer.Game.WorldEntities;
 using WorldServer.Network;
+using WorldServer.Game.Packets.PacketHandler;
 
 namespace WorldServer.Game.PacketHandler
 {
     public class CharacterHandler : Globals
     {
-        [Opcode(ClientMessage.EnumCharacters)]
-        public static void HandleCharacterEnum(ref PacketReader packet, ref WorldClass session)
+        [Opcode(ClientMessage.EnumCharacters, "16135")]
+        public static void HandleEnumCharactersResult(ref PacketReader packet, ref WorldClass session)
         {
             SQLResult result = DB.Characters.Select("SELECT guid, name, race, class, gender, skin, face, hairstyle, " +
                                                     "haircolor, facialhair, level, zone, map, x, y, z, guildguid, petdisplayid, " +
@@ -125,8 +126,8 @@ namespace WorldServer.Game.PacketHandler
             session.Send(enumCharacters);
         }
 
-        [Opcode(ClientMessage.RequestCharCreate)]
-        public static void HandleRequestCharCreate(ref PacketReader packet, ref WorldClass session)
+        [Opcode(ClientMessage.RequestCharCreate, "16135")]
+        public static void HandleResponseCharacterCreate(ref PacketReader packet, ref WorldClass session)
         {
             BitUnpack BitUnpack = new BitUnpack(packet);
 
@@ -178,8 +179,8 @@ namespace WorldServer.Game.PacketHandler
             session.Send(writer);
         }
 
-        [Opcode(ClientMessage.RequestCharDelete)]
-        public static void HandleRequestCharDelete(ref PacketReader packet, ref WorldClass session)
+        [Opcode(ClientMessage.RequestCharDelete, "")]
+        public static void HandleResponseCharacterDelete(ref PacketReader packet, ref WorldClass session)
         {
             UInt64 guid = packet.ReadUInt64();
 
@@ -191,8 +192,8 @@ namespace WorldServer.Game.PacketHandler
             DB.Characters.Execute("DELETE FROM character_spells WHERE guid = {0}", guid);
         }
 
-        [Opcode(ClientMessage.RequestRandomCharacterName)]
-        public static void HandleRequestRandomCharacterName(ref PacketReader packet, ref WorldClass session)
+        [Opcode(ClientMessage.RequestRandomCharacterName, "")]
+        public static void HandleGenerateRandomCharacterNameResult(ref PacketReader packet, ref WorldClass session)
         {
             byte gender = packet.ReadByte();
             byte race = packet.ReadByte();
@@ -216,7 +217,7 @@ namespace WorldServer.Game.PacketHandler
             session.Send(writer);
         }
 
-        [Opcode(ClientMessage.PlayerLogin)]
+        [Opcode(ClientMessage.PlayerLogin, "16135")]
         public static void HandlePlayerLogin(ref PacketReader packet, ref WorldClass session)
         {
             byte[] guidMask = { 6, 3, 0, 5, 7, 2, 1, 4 };
@@ -227,21 +228,13 @@ namespace WorldServer.Game.PacketHandler
             ulong guid = GuidUnpacker.GetGuid(guidMask, guidBytes);
             Log.Message(LogType.DEBUG, "Character with Guid: {0}, AccountId: {1} tried to enter the world.", guid, session.Account.Id);
 
-            session.Character = new Character(guid, ref session);
-            WorldMgr.Session = session;
+            session.Character = new Character(guid);
+            WorldMgr.Session.Add((uint)WorldMgr.Session.Count + 1, session);
 
-            SpellMgr.LoadSpells();
             WorldMgr.WriteAccountData(AccountDataMasks.CharacterCacheMask, ref session);
 
-            PacketWriter motd = new PacketWriter(LegacyMessage.MessageOfTheDay);
-            motd.WriteUInt32(3);
-
-            motd.WriteCString("Arctium MoP test");
-            motd.WriteCString("Welcome to our MoP server test.");
-            motd.WriteCString("Your development team =)");
-            session.Send(motd);
-
-            SpellHandler.SendSendKnownSpells();
+            MiscHandler.HandleMessageOfTheDay(ref session);
+            SpellHandler.HandleSendKnownSpells(ref session);
             UpdateHandler.HandleUpdateObject(ref packet, ref session);
         }
     }

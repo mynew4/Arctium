@@ -87,12 +87,27 @@ namespace WorldServer.Game.WorldEntities
                 {
                     try
                     {
-                        if (UpdateData[i] is uint)
-                            packet.WriteUInt32((uint)UpdateData[i]);
-                        else if (UpdateData[i] is float)
-                            packet.WriteFloat((float)UpdateData[i]);
-                        else
-                            packet.WriteInt32((int)UpdateData[i]);
+                        switch (UpdateData[i].GetType().Name)
+                        {
+                            /*case "Int16":
+                                packet.WriteInt16((short)UpdateData[i]);
+                                break;
+                            case "UInt16":
+                                packet.WriteUInt16((ushort)UpdateData[i]);
+                                break;*/
+                            case "Int32":
+                                packet.WriteInt32((int)UpdateData[i]);
+                                break;
+                            case "UInt32":
+                                packet.WriteUInt32((uint)UpdateData[i]);
+                                break;
+                            case "Single":
+                                packet.WriteFloat((float)UpdateData[i]);
+                                break;
+                            default:
+                                packet.WriteInt32((int)UpdateData[i]);
+                                break;
+                        }
                     }
                     catch
                     {

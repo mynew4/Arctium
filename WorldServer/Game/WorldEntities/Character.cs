@@ -36,9 +36,10 @@ namespace WorldServer.Game.WorldEntities
         public UInt32 CharacterFlags;
         public UInt32 CustomizeFlags;
 
+        public List<Skill> Skills = new List<Skill>();
         public List<PlayerSpell> SpellList = new List<PlayerSpell>();
 
-        public Character(UInt64 guid, ref WorldClass session) : base((int)PlayerFields.End)
+        public Character(UInt64 guid) : base((int)PlayerFields.End)
         {
             SQLResult result = DB.Characters.Select("SELECT * FROM characters WHERE guid = {0}", guid);
 
@@ -67,8 +68,8 @@ namespace WorldServer.Game.WorldEntities
             CharacterFlags = result.Read<UInt32>(0, "CharacterFlags");
             CustomizeFlags = result.Read<UInt32>(0, "CustomizeFlags");
 
-            // Set current session of the character
-            Globals.SetSession(ref session);
+            Globals.SpellMgr.LoadSpells(this);
+            Globals.SkillMgr.LoadSkills(this);
 
             SetCharacterFields();
         }
@@ -196,7 +197,10 @@ namespace WorldServer.Game.WorldEntities
             SetUpdateField<UInt64>((int)PlayerFields.Coinage, 0);
 
             for (int i = 0; i < 448; i++)
-                SetUpdateField<Int32>((int)PlayerFields.Skill + i, 0);
+                if (i < Skills.Count)
+                    SetUpdateField<UInt32>((int)PlayerFields.Skill + i, Skills[i].Id);
+                else
+                    SetUpdateField<UInt32>((int)PlayerFields.Skill + i, 0);
 
             for (int i = 0; i < 750; i++)
                 SetUpdateField<Int32>((int)PlayerFields.QuestLog + i, 0);

@@ -12,17 +12,14 @@ namespace WorldServer.Game.Managers
     public class Globals
     {
         public static CharacterStore CharacterMgr;
+        public static SkillManager SkillMgr;
         public static SpellManager SpellMgr;
         public static WorldManager WorldMgr;
-
-        public static WorldClass GetSession() { return WorldMgr.Session; }
-        public static void SetSession(ref WorldClass session) { WorldMgr.Session = session; }
-
-        public static Character GetCharacter() { return WorldMgr.Session.Character; }
 
         public static void InitializeManager()
         {
             CharacterMgr = CharacterStore.GetInstance();
+            SkillMgr = SkillManager.GetInstance();
             SpellMgr = SpellManager.GetInstance();
             WorldMgr = WorldManager.GetInstance();
         }

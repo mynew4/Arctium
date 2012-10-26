@@ -7,13 +7,14 @@ using Framework.ObjectDefines;
 using System;
 using WorldServer.Game.Managers;
 using WorldServer.Network;
+using WorldServer.Game.Packets.PacketHandler;
 
 namespace WorldServer.Game.PacketHandler
 {
     public class AuthenticationHandler : Globals
     {
-        [Opcode(ClientMessage.TransferInitiate)]
-        public static void HandleTransferInitiate(ref PacketReader packet, ref WorldClass session)
+        [Opcode(ClientMessage.TransferInitiate, "16135")]
+        public static void HandleAuthChallenge(ref PacketReader packet, ref WorldClass session)
         {
             PacketWriter authChallenge = new PacketWriter(JAMCCMessage.AuthChallenge, true);
 
@@ -27,8 +28,8 @@ namespace WorldServer.Game.PacketHandler
             session.Send(authChallenge);
         }
 
-        [Opcode(ClientMessage.AuthSession)]
-        public static void HandleAuthSession(ref PacketReader packet, ref WorldClass session)
+        [Opcode(ClientMessage.AuthSession, "16135")]
+        public static void HandleAuthResponse(ref PacketReader packet, ref WorldClass session)
         {
             BitUnpack BitUnpack = new BitUnpack(packet);
 
@@ -129,11 +130,7 @@ namespace WorldServer.Game.PacketHandler
 
             session.Send(authResponse);
 
-            PacketWriter tutorialFlags = new PacketWriter(LegacyMessage.TutorialFlags);
-            for (int i = 0; i < 8; i++)
-                tutorialFlags.WriteUInt32(0);
-
-            session.Send(tutorialFlags);
+            TutorialHandler.HandleTutorialFlags(ref session);
         }
     }
 }

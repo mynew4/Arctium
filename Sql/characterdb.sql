@@ -4,13 +4,13 @@ Navicat MySQL Data Transfer
 Source Server         : local
 Source Server Version : 50519
 Source Host           : localhost:3306
-Source Database       : characterdb
+Source Database       : characters
 
 Target Server Type    : MYSQL
 Target Server Version : 50519
 File Encoding         : 65001
 
-Date: 2012-08-27 07:49:42
+Date: 2012-10-27 00:31:32
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -77,6 +77,23 @@ INSERT INTO `character_creation_data` VALUES ('24', '5', '860', '5736', '1471.67
 INSERT INTO `character_creation_data` VALUES ('24', '7', '860', '5736', '1471.67', '3466.25', '181.675', '2.77359');
 INSERT INTO `character_creation_data` VALUES ('24', '8', '860', '5736', '1471.67', '3466.25', '181.675', '2.77359');
 INSERT INTO `character_creation_data` VALUES ('24', '10', '860', '5736', '1471.67', '3466.25', '181.675', '2.77359');
+
+-- ----------------------------
+-- Table structure for `character_creation_skills`
+-- ----------------------------
+DROP TABLE IF EXISTS `character_creation_skills`;
+CREATE TABLE `character_creation_skills` (
+  `race` tinyint(4) NOT NULL,
+  `class` tinyint(4) NOT NULL,
+  `skill` int(6) NOT NULL,
+  `skillName` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`race`,`class`,`skill`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of character_creation_skills
+-- ----------------------------
+INSERT INTO `character_creation_skills` VALUES ('24', '10', '905', 'Pandaren Neutral');
 
 -- ----------------------------
 -- Table structure for `character_creation_spells`
@@ -152,6 +169,21 @@ INSERT INTO `character_creation_spells` VALUES ('24', '10', '120275', '');
 INSERT INTO `character_creation_spells` VALUES ('24', '10', '120277', '');
 INSERT INTO `character_creation_spells` VALUES ('24', '10', '128678', '');
 INSERT INTO `character_creation_spells` VALUES ('24', '10', '131701', '');
+
+-- ----------------------------
+-- Table structure for `character_skills`
+-- ----------------------------
+DROP TABLE IF EXISTS `character_skills`;
+CREATE TABLE `character_skills` (
+  `guid` int(11) NOT NULL,
+  `skill` int(5) NOT NULL,
+  `skillLevel` mediumint(9) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`guid`,`skill`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of character_skills
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `character_spells`

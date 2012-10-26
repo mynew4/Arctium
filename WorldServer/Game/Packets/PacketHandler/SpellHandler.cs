@@ -14,12 +14,9 @@ namespace WorldServer.Game.PacketHandler
 {
     public class SpellHandler : Globals
     {
-        public static void SendSendKnownSpells()
+        public static void HandleSendKnownSpells(ref WorldClass session)
         {
-            Character pChar = GetSession().Character;
-
-            if (pChar.SpellList.Count == 0)
-                SpellMgr.LoadSpells();
+            Character pChar = session.Character;
 
             PacketWriter writer = new PacketWriter(LegacyMessage.SendKnownSpells);
             BitPack BitPack = new BitPack(writer);
@@ -31,7 +28,7 @@ namespace WorldServer.Game.PacketHandler
             pChar.SpellList.ForEach(spell =>
                 writer.WriteUInt32(spell.SpellId));
 
-            GetSession().Send(writer);
+            session.Send(writer);
         }
     }
 }

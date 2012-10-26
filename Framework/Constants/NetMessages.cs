@@ -12,7 +12,7 @@ namespace Framework.Constants
         ConnectTo                                = 0x8EA,
         Pong                                     = 0xAE0,
         ResetCompressionContext                  = 0xCE0,
-        FloodDetected                            = 0xEE0, 
+        FloodDetected                            = 0xEE0,
     }
 
     [Flags]
@@ -428,7 +428,7 @@ namespace Framework.Constants
         MessageOfTheDay                          = 0x952,
         AccountDataInitialized                   = 0xC4B,
         UpdateObject                             = 0x8F7,
-        TutorialFlags                            = 0,
+        TutorialFlags                            = 0x8AE,
         UITime                                   = 0,
         SendKnownSpells                          = 0xEA3,
         #region Character
@@ -442,34 +442,42 @@ namespace Framework.Constants
     [Flags]
     public enum ClientMessage : int
     {
-        #region Character
-        Logout                                   = 1662,
-        #endregion
-        #region UserRouterClient
+        #region Authentication
         TransferInitiate                         = 0x4F57,
-        SuspendCommsAck                          = -1,
         AuthSession                              = 0x08A,
-        Ping                                     = 0x4EB,
-        AuthContinuedSession                     = -1,
-        EnableNagle                              = -1,
-        SuspendTokenResponse                     = -1,
-        LogDisconnect                            = -1,
         #endregion
-        #region UserClient
+
+        #region CharacterList
+        ReadyForAccountDataTimes                 = 0x9A2,
         EnumCharacters                           = 0x576,
+        SetRealmSplitState                       = 0x820,
+        #endregion
+
+        #region WorldEnter
+        PlayerLogin                              = 0x203,
+        #endregion
+
+        #region Logout
+        Logout                                   = 0xCE0,
+        #endregion
+
+        #region Disconnect
+        LogDisconnect                            = 0x48F,
+        #endregion
+
+        #region Permanent
+        Ping                                     = 0x4EB,
+        #endregion
+
+        #region Uncategorized
         RequestRandomCharacterName               = 2757,
         RequestCharCreate                        = 0x332,
         RequestCharDelete                        = 214,
-        PlayerLogin                              = 0x203,
-        #endregion
-        #region Script
-        SetRealmSplitState                       = 0x820,
-        ReadyForAccountDataTimes                 = 0x9A2,
-        #endregion
-        #region WorldStateInfo
+        SuspendCommsAck                          = -1,
+        AuthContinuedSession                     = -1,
+        EnableNagle                              = -1,
+        SuspendTokenResponse                     = -1,
         RequestUITime                            = -1,
-        #endregion
-        #region Chat
         ChatMessageSay                           = -1,
         #endregion
     }
