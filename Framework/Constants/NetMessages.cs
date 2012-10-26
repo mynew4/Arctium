@@ -5,7 +5,7 @@ namespace Framework.Constants
     [Flags]
     public enum JAMCCMessage : uint
     {
-        AuthChallenge                            = 0x523,
+        AuthChallenge                            = 0xCAF,
         SuspendComms                             = 0xAE8,
         ResumeComms                              = 0xAE2,
         DropNewConnection                        = 0xCEA,
@@ -448,7 +448,7 @@ namespace Framework.Constants
         #region UserRouterClient
         TransferInitiate                         = 0x4F57,
         SuspendCommsAck                          = -1,
-        AuthSession                              = 0x08A,
+        AuthSession                              = 0x0C07,
         Ping                                     = 0x4EB,
         AuthContinuedSession                     = -1,
         EnableNagle                              = -1,
