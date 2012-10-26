@@ -68,38 +68,66 @@ namespace WorldServer.Game.PacketHandler
             SQLResult realmClassResult = DB.Realms.Select("SELECT class, expansion FROM realm_classes WHERE realmId = '{0}'", realmId);
             SQLResult realmRaceResult = DB.Realms.Select("SELECT race, expansion FROM realm_races WHERE realmId = '{0}'", realmId);
 
+            bool HasAccountData = true;
+            bool IsInQueue = false;
+
             PacketWriter authResponse = new PacketWriter(JAMCMessage.AuthResponse);
             BitPack BitPack = new BitPack(authResponse);
 
             BitPack.Write(1);                                      // HasAccountData
-            BitPack.Write(0);                                      // Unknown, 5.0.4
-            BitPack.Write(realmClassResult.Count, 25);              // Activation count for races
-            BitPack.Write(0, 22);                                  // Activate character template windows/button
-            BitPack.Write(realmRaceResult.Count, 25);             // Activation count for classes
-            BitPack.Write(0);                                      // IsInQueue
-            BitPack.Flush();
 
-            authResponse.WriteUInt8(0);
-            authResponse.WriteUInt8(session.Account.Expansion);
-
-            for (int c = 0; c < realmClassResult.Count; c++)
+            if (HasAccountData)
             {
-                authResponse.WriteUInt8(realmClassResult.Read<byte>(c, "class"));
-                authResponse.WriteUInt8(realmClassResult.Read<byte>(c, "expansion"));
+                BitPack.Write(realmClassResult.Count, 25);         // Activation count for classes
+                BitPack.Write(0);                                  // Unknown, 5.0.4
+                BitPack.Write(0);                                  // Unknown, 5.0.5
+                BitPack.Write(0, 22);                              // Activate character template windows/button
+
+                //if (HasCharacterTemplate)
+                //Write bits for char templates...
+               
+                BitPack.Write(realmRaceResult.Count, 25);          // Activation count for races
             }
 
-            authResponse.WriteUInt32(0);
-            authResponse.WriteUInt32(0);
-            authResponse.WriteUInt32(0);
+            BitPack.Write(IsInQueue);                              // IsInQueue
 
-
-            for (int r = 0; r < realmRaceResult.Count; r++)
+            if (IsInQueue)
             {
-                authResponse.WriteUInt8(realmRaceResult.Read<byte>(r, "race"));
-                authResponse.WriteUInt8(realmRaceResult.Read<byte>(r, "expansion"));
+                BitPack.Write(0);                                  // Unknown
+                BitPack.Flush();
+
+                authResponse.WriteUInt32(0);                       // QueuePosition
+            }
+            else
+                BitPack.Flush();
+
+            if (HasAccountData)
+            {
+                //if (HasCharacterTemplate)
+                //Write data for char templates...
+
+                for (int r = 0; r < realmRaceResult.Count; r++)
+                {
+                    authResponse.WriteUInt8(realmRaceResult.Read<byte>(r, "expansion"));
+                    authResponse.WriteUInt8(realmRaceResult.Read<byte>(r, "race"));
+
+                }
+
+                authResponse.WriteUInt32(0);
+                authResponse.WriteUInt32(0);
+                authResponse.WriteUInt8(0);
+                authResponse.WriteUInt8(session.Account.Expansion);
+                authResponse.WriteUInt8(session.Account.Expansion);
+
+                for (int c = 0; c < realmClassResult.Count; c++)
+                {
+                    authResponse.WriteUInt8(realmClassResult.Read<byte>(c, "class"));
+                    authResponse.WriteUInt8(realmClassResult.Read<byte>(c, "expansion"));
+                }
+
+                authResponse.WriteUInt32(0);
             }
 
-            authResponse.WriteUInt8(session.Account.Expansion);
             authResponse.WriteUInt8((byte)AuthCodes.AUTH_OK);
 
             session.Send(authResponse);

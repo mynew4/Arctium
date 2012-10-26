@@ -133,7 +133,7 @@ namespace WorldServer.Network
                     buffer[3] = header[3];
                 }
 
-                clientSocket.BeginSend(buffer, 0, buffer.Length, SocketFlags.None, new AsyncCallback(FinishSend), null);
+                clientSocket.Send(buffer, 0, buffer.Length, SocketFlags.None);
                 packet.Flush();
 
                 string clientInfo = ((IPEndPoint)clientSocket.RemoteEndPoint).Address + ":" + ((IPEndPoint)clientSocket.RemoteEndPoint).Port;
@@ -146,11 +146,6 @@ namespace WorldServer.Network
 
                 clientSocket.Close();
             }
-        }
-
-        public void FinishSend(IAsyncResult result)
-        {
-            clientSocket.EndSend(result);
         }
     }
 }

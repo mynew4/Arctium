@@ -26,7 +26,6 @@ namespace WorldServer.Game.PacketHandler
             BitPack BitPack = new BitPack(enumCharacters);
 
             BitPack.Write(0, 23);
-            BitPack.Write(1);
             BitPack.Write(result.Count, 17);
 
             if (result.Count != 0)
@@ -51,6 +50,7 @@ namespace WorldServer.Game.PacketHandler
                     BitPack.WriteGuildGuidMask(5);
                 }
 
+                BitPack.Write(1);
                 BitPack.Flush();
 
                 for (int c = 0; c < result.Count; c++)
@@ -119,6 +119,7 @@ namespace WorldServer.Game.PacketHandler
             }
             else
             {
+                BitPack.Write(1);
                 BitPack.Flush();
             };
 
