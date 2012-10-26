@@ -5,7 +5,7 @@ namespace Framework.Constants
     [Flags]
     public enum JAMCCMessage : uint
     {
-        AuthChallenge                            = 0xCAF,
+        AuthChallenge                            = 0x523,
         SuspendComms                             = 0xAE8,
         ResumeComms                              = 0xAE2,
         DropNewConnection                        = 0xCEA,
@@ -18,7 +18,7 @@ namespace Framework.Constants
     [Flags]
     public enum JAMCMessage : uint
     {
-        AuthResponse                             = 0xA15,
+        AuthResponse                             = 0xE20,
         WaitQueueUpdate                          = 0xAC8,
         WaitQueueFinish                          = 0xF17,
         AllAchievementData                       = 0xB64,
@@ -43,7 +43,7 @@ namespace Framework.Constants
         ReforgeResult                            = 0xBA6,
         TradeUpdated                             = 0xAFB,
         TradeStatus                              = 0xF85,
-        EnumCharactersResult                     = 0x33D,
+        EnumCharactersResult                     = 0xE28,
         GenerateRandomCharacterNameResult        = 0xA9B,
         GuildCommandResult                       = 0xA59,
         GuildRoster                              = 0xBEA,
@@ -448,7 +448,7 @@ namespace Framework.Constants
         #region UserRouterClient
         TransferInitiate                         = 0x4F57,
         SuspendCommsAck                          = -1,
-        AuthSession                              = 0xC07,
+        AuthSession                              = 0x08A,
         Ping                                     = 0x4EB,
         AuthContinuedSession                     = -1,
         EnableNagle                              = -1,
@@ -456,10 +456,10 @@ namespace Framework.Constants
         LogDisconnect                            = -1,
         #endregion
         #region UserClient
-        EnumCharacters                           = 0x146,
+        EnumCharacters                           = 0x576,
         RequestRandomCharacterName               = 2757,
         RequestCharCreate                        = 0x332,
-        RequestCharDelete                        = 0x944,
+        RequestCharDelete                        = 214,
         PlayerLogin                              = 0x203,
         #endregion
         #region Script
