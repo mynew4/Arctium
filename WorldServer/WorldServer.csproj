@@ -55,7 +55,6 @@
     <Compile Include="Game\ObjectStores\CharacterStore.cs" />
     <Compile Include="Game\Packets\PacketHandler\AuthenticationHandler.cs" />
     <Compile Include="Game\Packets\PacketHandler\CharacterHandler.cs" />
-    <Compile Include="Game\Packets\HandlerDefinitions.cs" />
     <Compile Include="Game\Packets\PacketHandler\ChatHandler.cs" />
     <Compile Include="Game\Packets\PacketHandler\LogoutHandler.cs" />
     <Compile Include="Game\Packets\PacketHandler\MoveHandler.cs" />

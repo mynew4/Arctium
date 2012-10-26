@@ -90,6 +90,7 @@
     <Compile Include="Logging\PacketLogging\PacketLog.cs" />
     <Compile Include="Network\Packets\BitPack.cs" />
     <Compile Include="Network\Packets\BitUnpack.cs" />
+    <Compile Include="Network\Packets\OpcodeAttribute.cs" />
     <Compile Include="ObjectDefines\Account.cs" />
     <Compile Include="Constants\Authentication\AuthCodes.cs" />
     <Compile Include="Constants\Authentication\AuthLinks.cs" />

@@ -15,6 +15,7 @@ namespace WorldServer.Game.PacketHandler
 {
     public class CharacterHandler : Globals
     {
+        [Opcode(ClientMessage.EnumCharacters)]
         public static void HandleCharacterEnum(ref PacketReader packet, ref WorldClass session)
         {
             SQLResult result = DB.Characters.Select("SELECT guid, name, race, class, gender, skin, face, hairstyle, " +
@@ -124,6 +125,7 @@ namespace WorldServer.Game.PacketHandler
             session.Send(enumCharacters);
         }
 
+        [Opcode(ClientMessage.RequestCharCreate)]
         public static void HandleRequestCharCreate(ref PacketReader packet, ref WorldClass session)
         {
             BitUnpack BitUnpack = new BitUnpack(packet);
@@ -176,6 +178,7 @@ namespace WorldServer.Game.PacketHandler
             session.Send(writer);
         }
 
+        [Opcode(ClientMessage.RequestCharDelete)]
         public static void HandleRequestCharDelete(ref PacketReader packet, ref WorldClass session)
         {
             UInt64 guid = packet.ReadUInt64();
@@ -188,6 +191,7 @@ namespace WorldServer.Game.PacketHandler
             DB.Characters.Execute("DELETE FROM character_spells WHERE guid = {0}", guid);
         }
 
+        [Opcode(ClientMessage.RequestRandomCharacterName)]
         public static void HandleRequestRandomCharacterName(ref PacketReader packet, ref WorldClass session)
         {
             byte gender = packet.ReadByte();
@@ -212,6 +216,7 @@ namespace WorldServer.Game.PacketHandler
             session.Send(writer);
         }
 
+        [Opcode(ClientMessage.PlayerLogin)]
         public static void HandlePlayerLogin(ref PacketReader packet, ref WorldClass session)
         {
             byte[] guidMask = { 6, 3, 0, 5, 7, 2, 1, 4 };

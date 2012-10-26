@@ -1,10 +1,10 @@
-﻿using System;
-using Framework.Configuration;
+﻿using Framework.Configuration;
 using Framework.Constants;
 using Framework.Constants.Authentication;
 using Framework.Database;
 using Framework.Network.Packets;
 using Framework.ObjectDefines;
+using System;
 using WorldServer.Game.Managers;
 using WorldServer.Network;
 
@@ -12,6 +12,7 @@ namespace WorldServer.Game.PacketHandler
 {
     public class AuthenticationHandler : Globals
     {
+        [Opcode(ClientMessage.TransferInitiate)]
         public static void HandleTransferInitiate(ref PacketReader packet, ref WorldClass session)
         {
             PacketWriter authChallenge = new PacketWriter(JAMCCMessage.AuthChallenge, true);
@@ -26,6 +27,7 @@ namespace WorldServer.Game.PacketHandler
             session.Send(authChallenge);
         }
 
+        [Opcode(ClientMessage.AuthSession)]
         public static void HandleAuthSession(ref PacketReader packet, ref WorldClass session)
         {
             BitUnpack BitUnpack = new BitUnpack(packet);
