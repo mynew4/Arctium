@@ -246,7 +246,7 @@ namespace WorldServer.Game.PacketHandler
             Log.Message(LogType.DEBUG, "Character with Guid: {0}, AccountId: {1} tried to enter the world.", guid, session.Account.Id);
 
             session.Character = new Character(guid);
-            WorldMgr.Session.Add((uint)WorldMgr.Session.Count + 1, session);
+            WorldMgr.Sessions.Add((uint)WorldMgr.Sessions.Count + 1, session);
 
             WorldMgr.WriteAccountData(AccountDataMasks.CharacterCacheMask, ref session);
 

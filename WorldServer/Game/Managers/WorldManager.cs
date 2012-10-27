@@ -28,11 +28,22 @@ namespace WorldServer.Game.Managers
 {
     public sealed class WorldManager : SingletonBase<WorldManager>
     {
-        public Dictionary<uint, WorldClass> Session;
+        public Dictionary<ulong, WorldClass> Sessions;
+        public WorldClass Session { get; set; }
 
         WorldManager()
         {
-            Session = new Dictionary<uint, WorldClass>();
+            Sessions = new Dictionary<ulong, WorldClass>();
+        }
+
+        public void AddSession(ulong guid, ref WorldClass session)
+        {
+            Sessions.Add(guid, session);
+        }
+
+        public void DeleteSession(ulong guid)
+        {
+            Sessions.Remove(guid);
         }
 
         public void WriteAccountData(AccountDataMasks mask, ref WorldClass session)

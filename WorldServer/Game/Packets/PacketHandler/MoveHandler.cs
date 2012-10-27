@@ -28,13 +28,29 @@ namespace WorldServer.Game.Packets.PacketHandler
             PacketWriter setCanFly = new PacketWriter(JAMCMessage.MoveSetCanFly);
             BitPack BitPack = new BitPack(setCanFly, session.Character.Guid);
 
-            BitPack.WriteGuidMask(7, 3, 1, 5, 0, 6, 2, 4);
+            BitPack.WriteGuidMask(0, 7, 6, 5, 1, 3, 4, 2);
             BitPack.Flush();
 
+            BitPack.WriteGuidBytes(7, 1, 3, 4);
             setCanFly.WriteUInt32(0);
+            BitPack.WriteGuidBytes(6, 0, 2, 5);
 
-            BitPack.WriteGuidBytes(2, 6, 7, 1, 3, 4, 6, 0);
             session.Send(setCanFly);
+        }
+
+        public static void HandleMoveUnsetCanFly(ref WorldClass session)
+        {
+            PacketWriter unsetCanFly = new PacketWriter(JAMCMessage.MoveUnsetCanFly);
+            BitPack BitPack = new BitPack(unsetCanFly, session.Character.Guid);
+
+            BitPack.WriteGuidMask(5, 7, 2, 3, 6, 0, 4, 1);
+            BitPack.Flush();
+
+            BitPack.WriteGuidBytes(7, 1, 0, 2, 5, 4);
+            unsetCanFly.WriteUInt32(0);
+            BitPack.WriteGuidBytes(7, 3);
+
+            session.Send(unsetCanFly);
         }
     }
 }

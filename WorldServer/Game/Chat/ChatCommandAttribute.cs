@@ -15,29 +15,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-using WorldServer.Game.ObjectStores;
-using WorldServer.Network;
+using System;
 
-namespace WorldServer.Game.Managers
+namespace WorldServer.Game.Chat
 {
-    public class Globals
+    public class ChatCommandAttribute : Attribute
     {
-        public static CharacterStore CharacterMgr;
-        public static SkillManager SkillMgr;
-        public static SpellManager SpellMgr;
-        public static WorldManager WorldMgr;
+        public string ChatCommand { get; set; }
 
-        public static WorldClass GetSession()
+        public ChatCommandAttribute(string chatCommand)
         {
-            return WorldMgr.Session;
-        }
-
-        public static void InitializeManager()
-        {
-            CharacterMgr = CharacterStore.GetInstance();
-            SkillMgr = SkillManager.GetInstance();
-            SpellMgr = SpellManager.GetInstance();
-            WorldMgr = WorldManager.GetInstance();
+            ChatCommand = chatCommand;
         }
     }
 }

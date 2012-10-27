@@ -86,7 +86,6 @@
     <Compile Include="DBC\DBCReader.cs" />
     <Compile Include="DBC\DBCStorage.cs" />
     <Compile Include="DBC\DBCStructure.cs" />
-    <Compile Include="Logging\PacketDumper.cs" />
     <Compile Include="Logging\PacketLogging\PacketLog.cs" />
     <Compile Include="Network\Packets\BitPack.cs" />
     <Compile Include="Network\Packets\BitUnpack.cs" />

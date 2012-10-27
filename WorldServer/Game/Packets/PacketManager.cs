@@ -19,11 +19,12 @@ using System.Collections.Generic;
  */
 
 using System.Reflection;
+using WorldServer.Game.Managers;
 using WorldServer.Network;
 
 namespace Framework.Network.Packets
 {
-    public static class PacketManager
+    public class PacketManager : Globals
     {
         static Dictionary<ClientMessage, HandlePacket> OpcodeHandlers = new Dictionary<ClientMessage, HandlePacket>();
         delegate void HandlePacket(ref PacketReader packet, ref WorldClass session);
@@ -45,6 +46,15 @@ namespace Framework.Network.Packets
 
         public static bool InvokeHandler(ref PacketReader reader, WorldClass session, ClientMessage opcode)
         {
+            if (session.Character != null)
+            {
+                ulong charGuid = session.Character.Guid;
+                if (WorldMgr.Sessions.ContainsKey(charGuid))
+                    WorldMgr.Sessions[charGuid] = session;
+                else
+                    WorldMgr.AddSession(charGuid, ref session);
+            }
+
             if (OpcodeHandlers.ContainsKey(opcode))
             {
                 OpcodeHandlers[opcode].Invoke(ref reader, ref session);

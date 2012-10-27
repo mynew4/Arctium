@@ -23,6 +23,7 @@ using Framework.DBC;
 using Framework.Logging;
 using Framework.Network.Packets;
 using System;
+using WorldServer.Game.Chat;
 using WorldServer.Game.Managers;
 using WorldServer.Network;
 
@@ -62,6 +63,7 @@ namespace WorldServer
                 Log.Message(LogType.NORMAL, "WorldServer successfully started!");
 
                 PacketManager.DefineOpcodeHandler();
+                ChatCommandParser.DefineChatCommands();
             }
             else
             {

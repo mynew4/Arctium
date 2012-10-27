@@ -19,6 +19,7 @@ using Framework.Constants;
 using Framework.Network.Packets;
 using WorldServer.Game.Managers;
 using WorldServer.Network;
+using WorldServer.Game.Chat;
 
 namespace WorldServer.Game.Packets.PacketHandler
 {
@@ -28,22 +29,31 @@ namespace WorldServer.Game.Packets.PacketHandler
         public static void HandleMessageChat(ref PacketReader packet, ref WorldClass session)
         {
             BitUnpack BitUnpack = new BitUnpack(packet);
-
             int language = packet.ReadInt32();
 
             uint messageLength = BitUnpack.GetBits<uint>(9);
             string chatMessage = packet.ReadString(messageLength);
 
-            PacketWriter messageChat = new PacketWriter(LegacyMessage.MessageChat);
+            if (chatMessage.StartsWith("!"))
+            {
+                WorldMgr.Session = session;
+                ChatCommandParser.ExecuteChatHandler(chatMessage);
+            }
+            else
+                SendMessageByType(ref session, 1, language, chatMessage);
+        }
 
+        public static void SendMessageByType(ref WorldClass session, byte type, int language, string chatMessage)
+        {
+            PacketWriter messageChat = new PacketWriter(LegacyMessage.MessageChat);
             ulong guid = session.Character.Guid;
 
-            messageChat.WriteUInt8(1);
+            messageChat.WriteUInt8(type);
             messageChat.WriteInt32(language);
             messageChat.WriteUInt64(guid);
             messageChat.WriteUInt32(0);
             messageChat.WriteUInt64(guid);
-            messageChat.WriteUInt32(messageLength + 1);
+            messageChat.WriteUInt32((uint)chatMessage.Length + 1);
             messageChat.WriteCString(chatMessage);
             messageChat.WriteUInt16(0);
 
