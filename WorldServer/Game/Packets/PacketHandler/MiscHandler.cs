@@ -1,7 +1,24 @@
-﻿using Framework.Constants;
+﻿/*
+ * Copyright (C) 2012 Arctium <http://>
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+using Framework.Constants;
+using Framework.Logging;
 using Framework.Network.Packets;
 using WorldServer.Network;
-using Framework.Logging;
 
 namespace WorldServer.Game.Packets.PacketHandler
 {
@@ -36,6 +53,15 @@ namespace WorldServer.Game.Packets.PacketHandler
             uint disconnectReason = packet.ReadUInt32();
 
             Log.Message(LogType.DEBUG, "Account with Id {0} disconnected. Reason: {1}", session.Account.Id, disconnectReason);
+        }
+
+        public static void HandleUpdateClientCacheVersion(ref WorldClass session)
+        {
+            PacketWriter cacheVersion = new PacketWriter(LegacyMessage.UpdateClientCacheVersion);
+
+            cacheVersion.WriteUInt32(0);
+
+            session.Send(cacheVersion);
         }
     }
 }

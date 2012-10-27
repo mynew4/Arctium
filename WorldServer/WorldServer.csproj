@@ -55,6 +55,7 @@
     <Compile Include="Game\Managers\WorldManager.cs" />
     <Compile Include="Game\ObjectStores\CharacterStore.cs" />
     <Compile Include="Game\Packets\PacketHandler\AuthenticationHandler.cs" />
+    <Compile Include="Game\Packets\PacketHandler\CacheHandler.cs" />
     <Compile Include="Game\Packets\PacketHandler\CharacterHandler.cs" />
     <Compile Include="Game\Packets\PacketHandler\ChatHandler.cs" />
     <Compile Include="Game\Packets\PacketHandler\LogoutHandler.cs" />

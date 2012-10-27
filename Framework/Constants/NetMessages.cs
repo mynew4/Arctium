@@ -1,4 +1,21 @@
-﻿using System;
+﻿/*
+ * Copyright (C) 2012 Arctium <http://>
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+using System;
 
 namespace Framework.Constants
 {
@@ -421,7 +438,7 @@ namespace Framework.Constants
     public enum LegacyMessage : uint
     {
         SetAddonInfoRequest                      = 0x9C6,
-        UpdateClientCacheVersion                 = 0,
+        UpdateClientCacheVersion                 = 0x956,
         RealmSplitStateResponse                  = 0xCCD,
         ResponseCharacterCreate                  = 0xC15,
         ResponseCharacterDelete                  = 570,
@@ -431,12 +448,10 @@ namespace Framework.Constants
         TutorialFlags                            = 0x8AE,
         UITime                                   = 0,
         SendKnownSpells                          = 0xEA3,
-        #region Character
         LogoutComplete                           = 1663,
-        #endregion
-        #region Chat
-        MessageChat                              = 0,
-        #endregion
+        MessageChat                              = 0xC9F,
+        NameCache                                = 0xCF9,
+        RealmCache                               = 0xC26,
     }
 
     [Flags]
@@ -478,7 +493,9 @@ namespace Framework.Constants
         EnableNagle                              = -1,
         SuspendTokenResponse                     = -1,
         RequestUITime                            = -1,
-        ChatMessageSay                           = -1,
+        ChatMessageSay                           = 0x61A,
+        NameCache                                = 0x884,
+        RealmCache                               = 0x81B,
         #endregion
     }
 

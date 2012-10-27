@@ -1,15 +1,31 @@
-﻿using System;
-using System.Collections;
-using System.Net.Sockets;
+﻿/*
+ * Copyright (C) 2012 Arctium <http://>
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 using Framework.Constants;
 using Framework.Cryptography;
 using Framework.Logging;
+using Framework.Logging.PacketLogging;
 using Framework.Network.Packets;
 using Framework.ObjectDefines;
-using WorldServer.Game.Managers;
-using WorldServer.Game.WorldEntities;
-using Framework.Logging.PacketLogging;
+using System;
+using System.Collections;
 using System.Net;
+using System.Net.Sockets;
+using WorldServer.Game.WorldEntities;
 
 namespace WorldServer.Network
 {
