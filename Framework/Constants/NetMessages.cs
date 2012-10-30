@@ -441,14 +441,14 @@ namespace Framework.Constants
         UpdateClientCacheVersion                 = 0x956,
         RealmSplitStateResponse                  = 0xCCD,
         ResponseCharacterCreate                  = 0xC15,
-        ResponseCharacterDelete                  = 570,
+        ResponseCharacterDelete                  = 0x936,
         MessageOfTheDay                          = 0x952,
         AccountDataInitialized                   = 0xC4B,
         UpdateObject                             = 0x8F7,
         TutorialFlags                            = 0x8AE,
         UITime                                   = 0,
         SendKnownSpells                          = 0xEA3,
-        LogoutComplete                           = 1663,
+        LogoutComplete                           = 0x8DA,
         MessageChat                              = 0xC9F,
         NameCache                                = 0xCF9,
         RealmCache                               = 0xC26,
@@ -465,6 +465,9 @@ namespace Framework.Constants
         #region CharacterList
         ReadyForAccountDataTimes                 = 0x9A2,
         EnumCharacters                           = 0x576,
+        RequestCharCreate                        = 0x332,
+        RequestCharDelete                        = 0x944,
+        RequestRandomCharacterName               = 0x044,
         SetRealmSplitState                       = 0x820,
         #endregion
 
@@ -485,9 +488,6 @@ namespace Framework.Constants
         #endregion
 
         #region Uncategorized
-        RequestRandomCharacterName               = 2757,
-        RequestCharCreate                        = 0x332,
-        RequestCharDelete                        = 214,
         SuspendCommsAck                          = -1,
         AuthContinuedSession                     = -1,
         EnableNagle                              = -1,

@@ -207,13 +207,14 @@ namespace WorldServer.Game.PacketHandler
 
             DB.Characters.Execute("DELETE FROM characters WHERE guid = {0}", guid);
             DB.Characters.Execute("DELETE FROM character_spells WHERE guid = {0}", guid);
+            DB.Characters.Execute("DELETE FROM character_skills WHERE guid = {0}", guid);
         }
 
         [Opcode(ClientMessage.RequestRandomCharacterName, "")]
         public static void HandleGenerateRandomCharacterNameResult(ref PacketReader packet, ref WorldClass session)
         {
-            byte gender = packet.ReadByte();
             byte race = packet.ReadByte();
+            byte gender = packet.ReadByte();
 
             List<string> names = DBCStorage.NameGenStorage.Where(n => n.Value.Race == race && n.Value.Gender == gender).Select(n => n.Value.Name).ToList();
             Random rand = new Random(Environment.TickCount);

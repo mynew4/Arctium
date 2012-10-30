@@ -32,8 +32,8 @@ namespace WorldServer.Game.PacketHandler
             PacketWriter writer = new PacketWriter(LegacyMessage.SendKnownSpells);
             BitPack BitPack = new BitPack(writer);
 
-            BitPack.Write(1);
             BitPack.Write<uint>((uint)pChar.SpellList.Count, 24);
+            BitPack.Write(1);
             BitPack.Flush();
 
             pChar.SpellList.ForEach(spell =>
