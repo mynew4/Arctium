@@ -31,7 +31,7 @@ namespace WorldServer.Game.Managers
 
             if (result.Count == 0)
             {
-                result = DB.Characters.Select("SELECT skill FROM character_creation_skills WHERE race = {0} AND class = {1} ORDER BY skill ASC", pChar.Race, pChar.Class);
+                result = DB.Characters.Select("SELECT skill FROM character_creation_skills WHERE race = {0} ORDER BY skill ASC", pChar.Race, pChar.Class);
 
                 for (int i = 0; i < result.Count; i++)
                     AddSkill(pChar, result.Read<uint>(i, "skill"));

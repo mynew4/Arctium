@@ -23,8 +23,8 @@ namespace WorldServer.Game.Chat
 {
     public class ChatCommandParser
     {
-        static Dictionary<string, HandleChatCommand> ChatCommands = new Dictionary<string, HandleChatCommand>();
-        delegate void HandleChatCommand(string[] args);
+        public static Dictionary<string, HandleChatCommand> ChatCommands = new Dictionary<string, HandleChatCommand>();
+        public delegate void HandleChatCommand(string[] args);
 
         public static void DefineChatCommands()
         {

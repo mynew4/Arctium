@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Game\Chat\ChatCommandAttribute.cs" />
     <Compile Include="Game\Chat\ChatCommandParser.cs" />
+    <Compile Include="Game\Chat\Commands\MiscCommands.cs" />
     <Compile Include="Game\Chat\Commands\MovementCommands.cs" />
     <Compile Include="Game\Managers\Globals.cs" />
     <Compile Include="Game\Managers\ObjectManager.cs" />

@@ -22,10 +22,12 @@ namespace WorldServer.Game.Chat
     public class ChatCommandAttribute : Attribute
     {
         public string ChatCommand { get; set; }
+        public string Description { get; set; }
 
-        public ChatCommandAttribute(string chatCommand)
+        public ChatCommandAttribute(string chatCommand, string description = "")
         {
             ChatCommand = chatCommand;
+            Description = description;
         }
     }
 }

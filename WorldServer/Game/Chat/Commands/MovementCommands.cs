@@ -23,7 +23,7 @@ namespace WorldServer.Game.Chat.Commands
 {
     public class MovementCommands : Globals
     {
-        [ChatCommand("fly")]
+        [ChatCommand("fly", "Usage: !fly #state (Turns the fly mode 'on' or 'off')")]
         public static void Fly(string[] args)
         {
             string state = CommandParser.Read<string>(args, 1);
@@ -41,7 +41,7 @@ namespace WorldServer.Game.Chat.Commands
             }
         }
 
-        [ChatCommand("walkspeed")]
+        [ChatCommand("walkspeed", "Usage: !walkspeed #speed (Set the current walk speed)")]
         public static void WalkSpeed(string[] args)
         {
             var session = GetSession();
@@ -66,7 +66,7 @@ namespace WorldServer.Game.Chat.Commands
             ChatHandler.SendMessageByType(ref session, 0, 0, "Walk speed set to default.");
         }
 
-        [ChatCommand("runspeed")]
+        [ChatCommand("runspeed", "Usage: !runspeed #speed (Set the current run speed)")]
         public static void RunSpeed(string[] args)
         {
             var session = GetSession();
@@ -90,7 +90,7 @@ namespace WorldServer.Game.Chat.Commands
             ChatHandler.SendMessageByType(ref session, 0, 0, "Run speed set to default.");
         }
 
-        [ChatCommand("swimspeed")]
+        [ChatCommand("swimspeed", "Usage: !swimspeed #speed (Set the current swim speed)")]
         public static void SwimSpeed(string[] args)
         {
             var session = GetSession();
@@ -114,7 +114,7 @@ namespace WorldServer.Game.Chat.Commands
             ChatHandler.SendMessageByType(ref session, 0, 0, "Swim speed set to default.");
         }
 
-        [ChatCommand("flightspeed")]
+        [ChatCommand("flightspeed", "Usage: !flightspeed #speed (Set the current flight speed)")]
         public static void FlightSpeed(string[] args)
         {
             var session = GetSession();
