@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50519
 File Encoding         : 65001
 
-Date: 2012-10-30 02:41:57
+Date: 2012-10-30 04:10:52
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -173,16 +173,36 @@ INSERT INTO `character_creation_data` VALUES ('24', '10', '860', '5736', '1471.6
 DROP TABLE IF EXISTS `character_creation_skills`;
 CREATE TABLE `character_creation_skills` (
   `race` tinyint(4) NOT NULL,
-  `class` tinyint(4) NOT NULL,
   `skill` int(6) NOT NULL,
   `skillName` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`race`,`class`,`skill`)
+  PRIMARY KEY (`race`,`skill`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of character_creation_skills
 -- ----------------------------
-INSERT INTO `character_creation_skills` VALUES ('24', '10', '905', 'Pandaren Neutral');
+INSERT INTO `character_creation_skills` VALUES ('1', '98', 'Common');
+INSERT INTO `character_creation_skills` VALUES ('2', '109', 'Orcish');
+INSERT INTO `character_creation_skills` VALUES ('3', '98', 'Common');
+INSERT INTO `character_creation_skills` VALUES ('3', '111', 'Dwarven');
+INSERT INTO `character_creation_skills` VALUES ('4', '113', 'Darnassian');
+INSERT INTO `character_creation_skills` VALUES ('5', '109', 'Orcish');
+INSERT INTO `character_creation_skills` VALUES ('5', '673', 'Forsaken');
+INSERT INTO `character_creation_skills` VALUES ('6', '109', 'Orcish');
+INSERT INTO `character_creation_skills` VALUES ('6', '115', 'Taurahe');
+INSERT INTO `character_creation_skills` VALUES ('7', '98', 'Common');
+INSERT INTO `character_creation_skills` VALUES ('7', '313', 'Gnomish');
+INSERT INTO `character_creation_skills` VALUES ('8', '109', 'Orcish');
+INSERT INTO `character_creation_skills` VALUES ('8', '315', 'Troll');
+INSERT INTO `character_creation_skills` VALUES ('9', '109', 'Orcish');
+INSERT INTO `character_creation_skills` VALUES ('9', '792', 'Goblin');
+INSERT INTO `character_creation_skills` VALUES ('10', '109', 'Orcish');
+INSERT INTO `character_creation_skills` VALUES ('10', '137', 'Thalassian');
+INSERT INTO `character_creation_skills` VALUES ('11', '98', 'Common');
+INSERT INTO `character_creation_skills` VALUES ('11', '759', 'Draenei');
+INSERT INTO `character_creation_skills` VALUES ('22', '98', 'Common');
+INSERT INTO `character_creation_skills` VALUES ('22', '791', 'Gilnean');
+INSERT INTO `character_creation_skills` VALUES ('24', '905', 'Pandaren Neutral');
 
 -- ----------------------------
 -- Table structure for `character_creation_spells`
