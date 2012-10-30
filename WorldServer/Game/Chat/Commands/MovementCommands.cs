@@ -40,5 +40,103 @@ namespace WorldServer.Game.Chat.Commands
                 ChatHandler.SendMessageByType(ref session, 0, 0, "Fly mode disabled.");
             }
         }
+
+        [ChatCommand("walkspeed")]
+        public static void WalkSpeed(string[] args)
+        {
+            var session = GetSession();
+
+            if (args.Length == 1)
+                MoveHandler.HandleMoveSetWalkSpeed(ref session);
+            else
+            {
+                var speed = CommandParser.Read<float>(args, 1);
+
+                if (speed <= 50 && speed > 0)
+                {
+                    MoveHandler.HandleMoveSetWalkSpeed(ref session, speed);
+                    ChatHandler.SendMessageByType(ref session, 0, 0, "Walk speed set to " + speed + "!");
+                }
+                else
+                    ChatHandler.SendMessageByType(ref session, 0, 0, "Please enter a value between 0.0 and 50.0!");
+
+                return;
+            }
+
+            ChatHandler.SendMessageByType(ref session, 0, 0, "Walk speed set to default.");
+        }
+
+        [ChatCommand("runspeed")]
+        public static void RunSpeed(string[] args)
+        {
+            var session = GetSession();
+
+            if (args.Length == 1)
+                MoveHandler.HandleMoveSetRunSpeed(ref session);
+            else
+            {
+                var speed = CommandParser.Read<float>(args, 1);
+                if (speed <= 50 && speed > 0)
+                {
+                    MoveHandler.HandleMoveSetRunSpeed(ref session, speed);
+                    ChatHandler.SendMessageByType(ref session, 0, 0, "Run speed set to " + speed + "!");
+                }
+                else
+                    ChatHandler.SendMessageByType(ref session, 0, 0, "Please enter a value between 0.0 and 50.0!");
+
+                return;
+            }
+
+            ChatHandler.SendMessageByType(ref session, 0, 0, "Run speed set to default.");
+        }
+
+        [ChatCommand("swimspeed")]
+        public static void SwimSpeed(string[] args)
+        {
+            var session = GetSession();
+
+            if (args.Length == 1)
+                MoveHandler.HandleMoveSetSwimSpeed(ref session);
+            else
+            {
+                var speed = CommandParser.Read<float>(args, 1);
+                if (speed <= 50 && speed > 0)
+                {
+                    MoveHandler.HandleMoveSetSwimSpeed(ref session, speed);
+                    ChatHandler.SendMessageByType(ref session, 0, 0, "Swim speed set to " + speed + "!");
+                }
+                else
+                    ChatHandler.SendMessageByType(ref session, 0, 0, "Please enter a value between 0.0 and 50.0!");
+
+                return;
+            }
+
+            ChatHandler.SendMessageByType(ref session, 0, 0, "Swim speed set to default.");
+        }
+
+        [ChatCommand("flightspeed")]
+        public static void FlightSpeed(string[] args)
+        {
+            var session = GetSession();
+
+            if (args.Length == 1)
+                MoveHandler.HandleMoveSetFlightSpeed(ref session);
+            else
+            {
+                var speed = CommandParser.Read<float>(args, 1);
+
+                if (speed <= 50 && speed > 0)
+                {
+                    MoveHandler.HandleMoveSetFlightSpeed(ref session, speed);
+                    ChatHandler.SendMessageByType(ref session, 0, 0, "Flight speed set to " + speed + "!");
+                }
+                else
+                    ChatHandler.SendMessageByType(ref session, 0, 0, "Please enter a value between 0.0 and 50.0!");
+
+                return;
+            }
+
+            ChatHandler.SendMessageByType(ref session, 0, 0, "Flight speed set to default.");
+        }
     }
 }
