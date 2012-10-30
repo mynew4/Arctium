@@ -229,8 +229,12 @@ namespace WorldServer.Game.PacketHandler
             while (result.Count != 0);
 
             PacketWriter writer = new PacketWriter(JAMCMessage.GenerateRandomCharacterNameResult);
+            BitPack BitPack = new BitPack(writer);
 
-            writer.WriteUInt8((byte)(0x80 + NewName.Length));
+            BitPack.Write<int>(NewName.Length, 15);
+            BitPack.Write(true);
+            BitPack.Flush();
+
             writer.WriteString(NewName);
             session.Send(writer);
         }
